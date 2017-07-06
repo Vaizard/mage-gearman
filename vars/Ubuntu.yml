@@ -1,5 +1,6 @@
 ---
 
+gearmand_logfile: /var/log/gearman-job-server/gearman.log
 gearmand_svcname: gearman-job-server
 gearmand_packages:
   - gearman-job-server
