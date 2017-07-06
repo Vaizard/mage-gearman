@@ -1,6 +1,6 @@
 ---
 
-- name: Install gearman
+- name: Install gearmand
   apt: name="{{ item }}" state=latest update_cache=yes cache_valid_time=3600
   with_items:
     - gearman-job-server
@@ -8,10 +8,10 @@
 
 - name: Install config
   template:
-    src: gearman.conf
+    src: gearmand.conf
     dest: /etc/default/gearman-job-server
     mode: 0644
   notify: Restart gearmand
 
 - name: Start and enable gearmand
-  service: name=gearmand state=started enabled=yes
+  service: name=gearman-job-server state=started enabled=yes
