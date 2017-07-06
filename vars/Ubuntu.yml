@@ -1,0 +1,6 @@
+---
+
+gearmand_svcname: gearman-job-server
+gearmand_packages:
+  - gearman-job-server
+  - gearman-tools
