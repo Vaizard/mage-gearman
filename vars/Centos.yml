@@ -1,0 +1,5 @@
+---
+
+gearmand_svcname: gearmand
+gearmand_packages:
+  - gearmand
