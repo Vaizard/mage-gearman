@@ -1,5 +1,20 @@
 ---
 
-gearmand_job_retries: 2
-gearmand_bind_address: 0.0.0.0
+gearmand_bind_address: localhost
 gearmand_port: 4730
+gearmand_job_retries: 0
+gearmand_sqlite3:
+  - file: /var/gearmand/queue.sqlite3
+  - table: german_queue
+gearmand_postgres:
+  - conn: user=MYUSERNAME password=MYPASSWORD dbname=MYDATABASE hostaddr=MYHOST port=MYPORTd
+  - table: german_queue
+gearmand_mysql:
+  - host: localhost
+  - port: 3306
+  - user: MYUSERNAME
+  - pass: MYPASSWORD
+  - db: MYDATABASE
+gearmand_memcache:
+  - servers: localhost:11211
+gearman_queue_type: none # posgsgres | mysql | memcache | sqlite3
