@@ -1,0 +1,6 @@
+---
+- name: "Include distro-specific variables"
+  include_vars: "vars_{{ ansible_distribution }}.yml"
+
+- name: Restart gearmand
+  service: name="{{ gearmand_svcname }}" state=restarted
