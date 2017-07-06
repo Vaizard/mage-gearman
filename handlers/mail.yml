@@ -1,4 +1,4 @@
 ---
 
-- name: Restart gearman
+- name: Restart gearmand
   service: name=gearman-job-server state=restarted
