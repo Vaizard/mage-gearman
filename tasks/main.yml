@@ -11,12 +11,31 @@
   dnf: name="{{ gearmand_packages }}" state=latest
   when: ansible_distribution == 'Centos'
 
-- name: Install config
+- name: Ensure systemd unit override directory is present (Debian/Ubuntu)
+  file: 
+    path: /etc/systemd/system/{{ gearmand_svcname }}.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Install config (Debian/Ubuntu)
+  file: 
+    path: /etc/systemd/system/gearman-job-server.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: 0644
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Install config (Centos)
   template:
     src: gearmand.conf
-    dest: /etc/default/gearman-job-server
+    dest: /etc/sysconfig/gearmand
     mode: 0644
   notify: Restart gearmand
-
+  when: ansible_distribution == 'Centos'
+  
 - name: Start and enable gearmand
-  service: name="{{ gearmand_service }}" state=started enabled=yes
+  systemd: name="{{ gearmand_svcname }}" state=started enabled=yes daemon_reload=yes
