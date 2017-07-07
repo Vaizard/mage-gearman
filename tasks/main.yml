@@ -1,10 +1,15 @@
 ---
 
-- name: Install gearmand
-  apt: name="{{ item }}" state=latest update_cache=yes cache_valid_time=3600
-  with_items:
-    - gearman-job-server
-    - gearman-tools
+- name: "Including distro-specific variables"
+  include_vars: "{{ ansible_distribution }}.yml"
+
+- name: Install gearmand (apt)
+  apt: name="{{ gearmand_packages }}" state=latest update_cache=yes cache_valid_time=3600
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Install gearmand (dnf)
+  dnf: name="{{ gearmand_packages }}" state=latest
+  when: ansible_distribution == 'Centos'
 
 - name: Install config
   template:
@@ -14,4 +19,4 @@
   notify: Restart gearmand
 
 - name: Start and enable gearmand
-  service: name=gearman-job-server state=started enabled=yes
+  service: name="{{ gearmand_service }}" state=started enabled=yes
