@@ -21,12 +21,11 @@
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: Install config (Debian/Ubuntu)
-  file: 
-    path: /etc/systemd/system/gearman-job-server.service.d
-    state: directory
-    owner: root
-    group: root
+  template:
+    src: gearmand-unit-override.conf
+    dest: /etc/systemd/system/{{ gearmand_svcname }}.service.d/mage-override.conf
     mode: 0644
+  notify: Restart gearmand (systemd)
   when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: Install config (Centos)
