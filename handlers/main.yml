@@ -4,3 +4,6 @@
 
 - name: Restart gearmand
   service: name="{{ gearmand_svcname }}" state=restarted
+  
+- name: Restart gearmand (systemd)
+  systemd: name="{{ gearmand_svcname }}" state=restarted daemon_reload=yes
